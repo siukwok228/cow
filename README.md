@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>資產管理專家 v3.7.8 - 終極修復</title>
+    <title>資產管理專家 v3.7.9</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #f1f5f9 !important; color: #1e293b !important; font-family: 'PingFang TC', sans-serif; }
         .card { background-color: white !important; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
         
-        /* 錄入區樣式 */
         input, select { 
             border: 1px solid #cbd5e1 !important; 
             border-radius: 8px !important; 
@@ -18,14 +17,17 @@
             color: #1e293b !important;
             font-size: 14px !important;
         }
-        input:focus { border-color: #3b82f6 !important; outline: none; }
 
-        /* 左側狀態條 */
         .border-outflow { border-left: 6px solid #ef4444 !important; }
         .border-inflow { border-left: 6px solid #10b981 !important; }
         
-        /* 強制讓日期和類型不換行 */
+        /* 強制表格單元格內容不換行 */
         .nowrap-cell { white-space: nowrap !important; }
+        
+        /* 徹底抹除預設表格標題樣式 */
+        table thead tr th {
+            border: none !important;
+        }
     </style>
 </head>
 <body class="p-4 md:p-10">
@@ -33,7 +35,7 @@
     <div class="max-w-7xl mx-auto">
         <header class="mb-10 flex flex-col md:flex-row justify-between items-center gap-4 border-b border-slate-200 pb-6">
             <div>
-                <h1 class="text-3xl font-black text-slate-900 tracking-tight">📊 投資流水管理 v3.7.8</h1>
+                <h1 class="text-3xl font-black text-slate-900 tracking-tight">📊 投資流水管理 v3.7.9</h1>
                 <p class="text-slate-500 font-medium mt-1">支出(紅) | 收入(綠)</p>
             </div>
             <button onclick="exportCSV()" class="bg-slate-800 hover:bg-black text-white px-6 py-2.5 rounded-xl font-bold transition shadow-lg text-sm">匯出 CSV</button>
@@ -56,10 +58,10 @@
                     <input type="number" id="quantity" placeholder="數量" class="w-1/2 md:w-24">
                 </div>
                 <input type="number" id="feeOrAmount" step="0.01" value="0" class="w-full md:w-28 font-black text-blue-700 bg-blue-50">
-                <button type="submit" class="w-full md:w-auto bg-blue-600 text-white px-6 py-2.5 rounded-lg font-black shadow-md">記錄</button>
+                <button type="submit" class="w-full md:w-auto bg-blue-600 text-white px-6 py-2.5 rounded-lg font-black shadow-md transition-all active:scale-95">記錄</button>
             </form>
             <div class="mt-3">
-                <input type="text" id="note" placeholder="備註事項..." class="w-full text-sm italic !bg-slate-50 border-none rounded-md p-2">
+                <input type="text" id="note" placeholder="備註事項..." class="w-full text-sm italic !bg-slate-50 border-none rounded-md p-2 text-slate-500">
             </div>
         </div>
 
@@ -73,16 +75,16 @@
 
         <div class="card overflow-hidden border border-slate-200 shadow-2xl">
             <div class="overflow-x-auto">
-                <table class="w-full text-sm text-left table-fixed min-w-[900px]">
+                <table class="w-full text-sm text-left table-fixed min-w-[950px]">
                     <thead>
-                        <tr style="background-color: #1e293b !important;">
-                            <th style="padding: 16px 12px; color: #ffffff !important; font-weight: 800; width: 140px;">日期</th>
-                            <th style="padding: 16px 12px; color: #ffffff !important; font-weight: 800; width: 100px;">類型</th>
-                            <th style="padding: 16px 12px; color: #ffffff !important; font-weight: 800; width: 120px; text-center">代號</th>
-                            <th style="padding: 16px 12px; color: #ffffff !important; font-weight: 800; width: 180px; text-align: right;">交易詳情</th>
-                            <th style="padding: 16px 12px; color: #ffffff !important; font-weight: 800; width: 120px; text-align: right;">附加金額</th>
-                            <th style="padding: 16px 12px; color: #ffffff !important; font-weight: 800; width: 150px; text-align: right;">現金流</th>
-                            <th style="padding: 16px 12px; color: #ffffff !important; font-weight: 800; width: 80px; text-center">操作</th>
+                        <tr style="background-color: #1e293b !important; color: #ffffff !important;">
+                            <th style="padding: 18px 15px; color: white !important; font-weight: 800; width: 150px; background-color: #1e293b !important;">日期</th>
+                            <th style="padding: 18px 15px; color: white !important; font-weight: 800; width: 110px; background-color: #1e293b !important;">類型</th>
+                            <th style="padding: 18px 15px; color: white !important; font-weight: 800; width: 130px; text-align: center; background-color: #1e293b !important;">代號</th>
+                            <th style="padding: 18px 15px; color: white !important; font-weight: 800; width: 200px; text-align: right; background-color: #1e293b !important;">交易詳情</th>
+                            <th style="padding: 18px 15px; color: white !important; font-weight: 800; width: 130px; text-align: right; background-color: #1e293b !important;">附加金額</th>
+                            <th style="padding: 18px 15px; color: white !important; font-weight: 800; width: 150px; text-align: right; background-color: #1e293b !important;">現金流</th>
+                            <th style="padding: 18px 15px; color: white !important; font-weight: 800; width: 80px; text-align: center; background-color: #1e293b !important;">操作</th>
                         </tr>
                     </thead>
                     <tbody id="recordBody" class="divide-y divide-slate-100 bg-white"></tbody>
@@ -100,6 +102,7 @@
         function toggleFields() {
             const isTrade = (document.getElementById('entryType').value === '買入' || document.getElementById('entryType').value === '賣出');
             document.getElementById('tradeFields').style.opacity = isTrade ? "1" : "0.3";
+            document.getElementById('tradeFields').style.pointerEvents = isTrade ? "auto" : "none";
         }
 
         function render() {
@@ -114,22 +117,24 @@
             filtered.forEach(r => {
                 const subtotal = (r.price || 0) * (r.quantity || 0);
                 let rowCash = 0;
-                if (r.type === '買入') { totalBuyQty += r.quantity; totalBuyCost += (subtotal + Math.abs(r.feeOrAmount)); rowCash = -subtotal + r.feeOrAmount; }
-                else if (r.type === '賣出') { totalSellQty += r.quantity; rowCash = subtotal + r.feeOrAmount; }
-                else { rowCash = r.feeOrAmount; }
+                if (r.type === '買入') { 
+                    totalBuyQty += r.quantity; totalBuyCost += (subtotal + Math.abs(r.feeOrAmount)); rowCash = -subtotal + r.feeOrAmount; 
+                } else if (r.type === '賣出') { 
+                    totalSellQty += r.quantity; rowCash = subtotal + r.feeOrAmount; 
+                } else { rowCash = r.feeOrAmount; }
                 totalCashFlow += rowCash; totalFees += r.feeOrAmount;
 
                 const isOut = (r.type === '買入' || r.type === '費用');
                 tbody.innerHTML += `
-                    <tr class="hover:bg-slate-50 ${isOut ? 'border-outflow' : 'border-inflow'}">
-                        <td class="px-6 py-4 font-mono font-bold text-slate-600 nowrap-cell">${r.date}</td>
-                        <td class="px-6 py-4 font-black ${isOut ? 'text-red-600' : 'text-green-600'} nowrap-cell">${r.type}</td>
-                        <td class="px-6 py-4 font-black text-slate-800 text-center">${r.symbol}</td>
-                        <td class="px-6 py-4 text-right font-medium text-slate-600">${r.price ? `${r.price.toLocaleString()} × ${r.quantity.toLocaleString()}` : '--'}</td>
-                        <td class="px-6 py-4 text-right font-bold ${r.feeOrAmount < 0 ? 'text-red-500' : 'text-green-600'}">${r.feeOrAmount.toLocaleString()}</td>
-                        <td class="px-6 py-4 text-right font-black ${rowCash >= 0 ? 'text-green-600' : 'text-red-600'}">${rowCash.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
-                        <td class="px-6 py-4 text-center">
-                            <button onclick="deleteRecord(${r.id})" class="text-slate-300 hover:text-red-500 text-lg">✕</button>
+                    <tr class="hover:bg-slate-50 transition-colors ${isOut ? 'border-outflow' : 'border-inflow'}">
+                        <td class="px-4 py-5 font-mono font-bold text-slate-600 nowrap-cell">${r.date}</td>
+                        <td class="px-4 py-5 font-black ${isOut ? 'text-red-600' : 'text-green-600'} nowrap-cell">${r.type}</td>
+                        <td class="px-4 py-5 font-black text-slate-800 text-center">${r.symbol}</td>
+                        <td class="px-4 py-5 text-right font-medium text-slate-600">${r.price ? `${r.price.toLocaleString()} × ${r.quantity.toLocaleString()}` : '--'}</td>
+                        <td class="px-4 py-5 text-right font-bold ${r.feeOrAmount < 0 ? 'text-red-500' : 'text-green-600'}">${r.feeOrAmount.toLocaleString()}</td>
+                        <td class="px-4 py-5 text-right font-black ${rowCash >= 0 ? 'text-green-600' : 'text-red-600'}">${rowCash.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
+                        <td class="px-4 py-5 text-center">
+                            <button onclick="deleteRecord(${r.id})" class="text-slate-300 hover:text-red-500 text-lg transition-colors">✕</button>
                         </td>
                     </tr>
                 `;
@@ -142,14 +147,16 @@
             if (filter) {
                 grid.innerHTML = `
                     <div class="card p-6 border-b-4 border-blue-500"><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">目前持倉</p><p class="text-2xl font-black">${q.toLocaleString()}</p></div>
-                    <div class="card p-6 border-b-4 border-amber-500"><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">平均成本</p><p class="text-2xl font-black">$${c.toLocaleString(undefined,{minimumFractionDigits: 2})}</p></div>
-                    <div class="card p-6 border-b-4 border-slate-300"><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">累積息費</p><p class="text-2xl font-black">${f.toLocaleString()}</p></div>
-                    <div class="card p-6 bg-slate-800 text-white shadow-xl"><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">標的淨流</p><p class="text-2xl font-black ${t>=0?'text-green-400':'text-red-400'}">$${t.toLocaleString(undefined,{minimumFractionDigits: 2})}</p></div>
+                    <div class="card p-6 border-b-4 border-amber-500"><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">平均成本</p><p class="text-2xl font-black text-amber-600">$${c.toLocaleString(undefined,{minimumFractionDigits: 2})}</p></div>
+                    <div class="card p-6 border-b-4 border-slate-300"><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">累積息費</p><p class="text-2xl font-black ${f>=0?'text-green-600':'text-red-500'}">${f.toLocaleString()}</p></div>
+                    <div class="card p-6 bg-slate-800 text-white shadow-xl"><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest text-slate-400">標的總損益</p><p class="text-2xl font-black ${t>=0?'text-green-400':'text-red-400'}">$${t.toLocaleString(undefined,{minimumFractionDigits: 2})}</p></div>
                 `;
             } else {
-                grid.innerHTML = `<div class="card p-6 border-b-4 border-slate-400 md:col-span-2"><p class="text-xs font-black text-slate-400 uppercase">帳戶流水總計</p><p class="text-2xl font-black">$${t.toLocaleString(undefined,{minimumFractionDigits: 2})}</p></div>
-                <div class="card p-6 border-b-4 border-red-500 md:col-span-1"><p class="text-xs font-black text-slate-400 uppercase">總支出費用</p><p class="text-2xl font-black text-red-600">$${f.toLocaleString()}</p></div>
-                <div class="card p-6 bg-amber-50 md:col-span-1 border border-amber-200 flex items-center justify-center font-bold text-amber-700 italic text-sm">💡 輸入代號查詢損益</div>`;
+                grid.innerHTML = `
+                    <div class="card p-6 border-b-4 border-slate-400 md:col-span-2"><p class="text-xs font-black text-slate-400 uppercase">帳戶流水總計</p><p class="text-2xl font-black text-slate-800">$${t.toLocaleString(undefined,{minimumFractionDigits: 2})}</p></div>
+                    <div class="card p-6 border-b-4 border-red-500 md:col-span-1"><p class="text-xs font-black text-slate-400 uppercase">總支出費用</p><p class="text-2xl font-black text-red-600">$${f.toLocaleString()}</p></div>
+                    <div class="card p-6 bg-amber-50 md:col-span-1 border border-amber-200 flex items-center justify-center font-bold text-amber-700 italic text-sm">💡 輸入「代號」查詢損益</div>
+                `;
             }
         }
 
@@ -159,11 +166,11 @@
             if(!symbol) return alert('請輸入股票代號');
             records.push({ id: Date.now(), date: document.getElementById('entryDate').value, type: document.getElementById('entryType').value, symbol, price: parseFloat(document.getElementById('price').value || 0), quantity: parseInt(document.getElementById('quantity').value || 0), feeOrAmount: parseFloat(document.getElementById('feeOrAmount').value || 0), note: document.getElementById('note').value });
             localStorage.setItem('v3_7_portfolio_data', JSON.stringify(records));
-            render(); document.getElementById('mainForm').reset(); initDate();
+            render(); document.getElementById('mainForm').reset(); initDate(); toggleFields();
         });
 
-        function deleteRecord(id) { if(confirm('確定刪除？')) { records = records.filter(r => r.id !== id); localStorage.setItem('v3_7_portfolio_data', JSON.stringify(records)); render(); } }
-        function exportCSV() { let csv = "\uFEFF日期,類型,代號,單價,數量,附加金額\n"; records.forEach(r => csv += `${r.date},${r.type},${r.symbol},${r.price},${r.quantity},${r.feeOrAmount}\n`); const link = document.createElement("a"); link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' })); link.download = `Portfolio_v3.7.8.csv`; link.click(); }
+        function deleteRecord(id) { if(confirm('確定要刪除這筆紀錄嗎？')) { records = records.filter(r => r.id !== id); localStorage.setItem('v3_7_portfolio_data', JSON.stringify(records)); render(); } }
+        function exportCSV() { let csv = "\uFEFF日期,類型,代號,單價,數量,附加金額\n"; records.forEach(r => csv += `${r.date},${r.type},${r.symbol},${r.price},${r.quantity},${r.feeOrAmount}\n`); const link = document.createElement("a"); link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' })); link.download = `Portfolio_v3.7.9.csv`; link.click(); }
         render();
     </script>
 </body>
