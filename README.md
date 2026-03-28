@@ -81,7 +81,7 @@
 
         <div class="card overflow-x-auto shadow-sm">
             <table class="min-w-full text-sm">
-                <thead class="bg-slate-800 text-white">
+                <thead class="bg-slate-800 text-black">
                     <tr class="uppercase text-[11px] tracking-widest">
                         <th class="px-6 py-4 text-left font-medium">日期</th>
                         <th class="px-6 py-4 text-left font-medium">類型</th>
@@ -168,7 +168,7 @@
                         <p class="text-2xl font-bold ${totalFees >= 0 ? 'text-green-600' : 'text-red-500'}">$${totalFees.toLocaleString()}</p>
                     </div>
                     <div class="card p-5 bg-slate-800 text-white shadow-lg">
-                        <p class="text-[10px] font-bold text-slate-300 uppercase">標的總計淨流</p>
+                        <p class="text-[10px] font-bold text-slate-300 uppercase">該股票的總計淨流</p>
                         <p class="text-2xl font-bold ${totalCashFlow >= 0 ? 'text-green-400' : 'text-red-400'}">$${totalCashFlow.toLocaleString(undefined, {minimumFractionDigits: 2})}</p>
                     </div>
                 `;
