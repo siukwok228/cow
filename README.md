@@ -83,7 +83,7 @@
         <div class="card overflow-x-auto shadow-md border border-slate-200">
             <table class="min-w-full text-sm">
                 <thead>
-                    <tr class="bg-slate-800 text-white uppercase text-[11px] tracking-[0.1em]">
+                    <tr class="bg-slate-800 text-black uppercase text-[11px] tracking-[0.1em]">
                         <th class="px-6 py-4 text-left font-bold">日期</th>
                         <th class="px-6 py-4 text-left font-bold">類型</th>
                         <th class="px-6 py-4 text-left font-bold">代號</th>
