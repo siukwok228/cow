@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>資產管理專家 v3.7.9</title>
+    <title>資產管理專家 v3.8.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #f1f5f9 !important; color: #1e293b !important; font-family: 'PingFang TC', sans-serif; }
@@ -21,13 +21,10 @@
         .border-outflow { border-left: 6px solid #ef4444 !important; }
         .border-inflow { border-left: 6px solid #10b981 !important; }
         
-        /* 強制表格單元格內容不換行 */
         .nowrap-cell { white-space: nowrap !important; }
         
-        /* 徹底抹除預設表格標題樣式 */
-        table thead tr th {
-            border: none !important;
-        }
+        /* 徹底抹除 GitHub Pages 可能干擾表格標題的樣式 */
+        table thead tr th { border: none !important; }
     </style>
 </head>
 <body class="p-4 md:p-10">
@@ -35,7 +32,7 @@
     <div class="max-w-7xl mx-auto">
         <header class="mb-10 flex flex-col md:flex-row justify-between items-center gap-4 border-b border-slate-200 pb-6">
             <div>
-                <h1 class="text-3xl font-black text-slate-900 tracking-tight">📊 投資流水管理 v3.7.9</h1>
+                <h1 class="text-3xl font-black text-slate-900 tracking-tight">📊 投資流水管理 v3.8.0</h1>
                 <p class="text-slate-500 font-medium mt-1">支出(紅) | 收入(綠)</p>
             </div>
             <button onclick="exportCSV()" class="bg-slate-800 hover:bg-black text-white px-6 py-2.5 rounded-xl font-bold transition shadow-lg text-sm">匯出 CSV</button>
@@ -77,7 +74,7 @@
             <div class="overflow-x-auto">
                 <table class="w-full text-sm text-left table-fixed min-w-[950px]">
                     <thead>
-                        <tr style="background-color: #1e293b !important; color: #ffffff !important;">
+                        <tr style="background-color: #1e293b !important;">
                             <th style="padding: 18px 15px; color: white !important; font-weight: 800; width: 150px; background-color: #1e293b !important;">日期</th>
                             <th style="padding: 18px 15px; color: white !important; font-weight: 800; width: 110px; background-color: #1e293b !important;">類型</th>
                             <th style="padding: 18px 15px; color: white !important; font-weight: 800; width: 130px; text-align: center; background-color: #1e293b !important;">代號</th>
@@ -145,11 +142,15 @@
         function updateStats(filter, q, c, f, t) {
             const grid = document.getElementById('statsGrid');
             if (filter) {
+                // 將「標的總損益」卡片背景強制設為深藍色 (#1e293b)
                 grid.innerHTML = `
-                    <div class="card p-6 border-b-4 border-blue-500"><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">目前持倉</p><p class="text-2xl font-black">${q.toLocaleString()}</p></div>
+                    <div class="card p-6 border-b-4 border-blue-500"><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">目前持倉</p><p class="text-2xl font-black text-slate-800">${q.toLocaleString()}</p></div>
                     <div class="card p-6 border-b-4 border-amber-500"><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">平均成本</p><p class="text-2xl font-black text-amber-600">$${c.toLocaleString(undefined,{minimumFractionDigits: 2})}</p></div>
                     <div class="card p-6 border-b-4 border-slate-300"><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">累積息費</p><p class="text-2xl font-black ${f>=0?'text-green-600':'text-red-500'}">${f.toLocaleString()}</p></div>
-                    <div class="card p-6 bg-slate-800 text-white shadow-xl"><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest text-slate-400">標的總損益</p><p class="text-2xl font-black ${t>=0?'text-green-400':'text-red-400'}">$${t.toLocaleString(undefined,{minimumFractionDigits: 2})}</p></div>
+                    <div class="card p-6 shadow-xl" style="background-color: #1e293b !important; color: white !important;">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">標的總損益</p>
+                        <p class="text-2xl font-black ${t>=0?'text-green-400':'text-red-400'}">$${t.toLocaleString(undefined,{minimumFractionDigits: 2})}</p>
+                    </div>
                 `;
             } else {
                 grid.innerHTML = `
@@ -170,7 +171,7 @@
         });
 
         function deleteRecord(id) { if(confirm('確定要刪除這筆紀錄嗎？')) { records = records.filter(r => r.id !== id); localStorage.setItem('v3_7_portfolio_data', JSON.stringify(records)); render(); } }
-        function exportCSV() { let csv = "\uFEFF日期,類型,代號,單價,數量,附加金額\n"; records.forEach(r => csv += `${r.date},${r.type},${r.symbol},${r.price},${r.quantity},${r.feeOrAmount}\n`); const link = document.createElement("a"); link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' })); link.download = `Portfolio_v3.7.9.csv`; link.click(); }
+        function exportCSV() { let csv = "\uFEFF日期,類型,代號,單價,數量,附加金額\n"; records.forEach(r => csv += `${r.date},${r.type},${r.symbol},${r.price},${r.quantity},${r.feeOrAmount}\n`); const link = document.createElement("a"); link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' })); link.download = `Portfolio_Final.csv`; link.click(); }
         render();
     </script>
 </body>
