@@ -148,7 +148,7 @@
                     <div class="card p-6 border-b-4 border-amber-500"><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">平均成本</p><p class="text-2xl font-black text-amber-600">$${c.toLocaleString(undefined,{minimumFractionDigits: 2})}</p></div>
                     <div class="card p-6 border-b-4 border-slate-300"><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">累積息費</p><p class="text-2xl font-black ${f>=0?'text-green-600':'text-red-500'}">${f.toLocaleString()}</p></div>
                     <div class="card p-6 shadow-xl" style="background-color: #1e293b !important; color: white !important;">
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">標的總損益</p>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">該股票的總損益</p>
                         <p class="text-2xl font-black ${t>=0?'text-green-400':'text-red-400'}">$${t.toLocaleString(undefined,{minimumFractionDigits: 2})}</p>
                     </div>
                 `;
