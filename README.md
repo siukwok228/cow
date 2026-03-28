@@ -144,7 +144,7 @@
                     <div class="card p-6 border-b-4 border-blue-500"><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">目前持倉</p><p class="text-2xl font-black">${q.toLocaleString()}</p></div>
                     <div class="card p-6 border-b-4 border-amber-500"><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">平均成本</p><p class="text-2xl font-black">$${c.toLocaleString(undefined,{minimumFractionDigits: 2})}</p></div>
                     <div class="card p-6 border-b-4 border-slate-300"><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">累積息費</p><p class="text-2xl font-black">${f.toLocaleString()}</p></div>
-                    <div class="card p-6 bg-slate-800 text-white shadow-xl"><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">該股票的淨流</p><p class="text-2xl font-black ${t>=0?'text-green-400':'text-red-400'}">$${t.toLocaleString(undefined,{minimumFractionDigits: 2})}</p></div>
+                    <div class="card p-6 bg-slate-800 text-white shadow-xl"><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">標的淨流</p><p class="text-2xl font-black ${t>=0?'text-green-400':'text-red-400'}">$${t.toLocaleString(undefined,{minimumFractionDigits: 2})}</p></div>
                 `;
             } else {
                 grid.innerHTML = `<div class="card p-6 border-b-4 border-slate-400 md:col-span-2"><p class="text-xs font-black text-slate-400 uppercase">帳戶流水總計</p><p class="text-2xl font-black">$${t.toLocaleString(undefined,{minimumFractionDigits: 2})}</p></div>
