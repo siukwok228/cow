@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>資產管理專家 v3.7.6 - 旗艦美化版</title>
+    <title>資產管理專家 v3.7.7 - 佈局優化版</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* 全局強制背景，防止深色模式干擾 */
+        /* 全局強制背景 */
         body { background-color: #f1f5f9 !important; color: #1e293b !important; font-family: 'PingFang TC', sans-serif; }
         .card { background-color: white !important; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
         
-        /* 強制表頭樣式：解決文字看不見的問題 */
+        /* 強制表頭樣式（針對 GitHub Pages） */
         .table-header { background-color: #1e293b !important; }
         .table-header th { color: #ffffff !important; font-weight: 700 !important; padding: 16px 12px !important; }
 
@@ -18,11 +18,12 @@
         input, select { 
             border: 1px solid #cbd5e1 !important; 
             border-radius: 8px !important; 
-            padding: 10px !important;
+            padding: 8px 10px !important; /* 稍微縮小間距以適應單排 */
             background-color: white !important;
             color: #1e293b !important;
+            font-size: 14px !important;
         }
-        input:focus { border-color: #3b82f6 !important; ring: 2px #bfdbfe; outline: none; }
+        input:focus { border-color: #3b82f6 !important; outline: none; }
 
         .border-outflow { border-left: 6px solid #ef4444 !important; }
         .border-inflow { border-left: 6px solid #10b981 !important; }
@@ -30,10 +31,10 @@
 </head>
 <body class="p-4 md:p-10">
 
-    <div class="max-w-6xl mx-auto">
-        <header class="mb-10 flex flex-col md:flex-row justify-between items-center gap-4">
+    <div class="max-w-7xl mx-auto">
+        <header class="mb-10 flex flex-col md:flex-row justify-between items-center gap-4 border-b border-slate-200 pb-6">
             <div>
-                <h1 class="text-3xl font-black text-slate-900 tracking-tight">📊 投資流水管理 <span class="text-blue-600">v3.7.6</span></h1>
+                <h1 class="text-3xl font-black text-slate-900 tracking-tight">📊 投資流水管理 v3.7.7</h1>
                 <p class="text-slate-500 font-medium mt-1">支出統一標紅 | 收入統一標綠</p>
             </div>
             <button onclick="exportCSV()" class="bg-slate-800 hover:bg-black text-white px-6 py-2.5 rounded-xl font-bold transition shadow-lg text-sm">
@@ -43,49 +44,34 @@
 
         <div id="statsGrid" class="grid grid-cols-1 md:grid-cols-4 gap-5 mb-10"></div>
 
-        <div class="card p-8 mb-10 border-t-8 border-slate-800">
-            <h3 class="text-sm font-black text-slate-400 uppercase tracking-widest mb-6">新增交易紀錄</h3>
-            <form id="mainForm" class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-7 gap-4 items-end">
-                <div class="md:col-span-1">
-                    <label class="block text-xs font-bold text-slate-500 mb-2">日期</label>
-                    <input type="date" id="entryDate" class="w-full">
+        <div class="card p-5 mb-8 border border-slate-200 shadow-xl">
+            <form id="mainForm" class="flex flex-col md:flex-row items-center gap-3">
+                <input type="date" id="entryDate" class="w-full md:w-auto flex-grow-0">
+                
+                <select id="entryType" onchange="toggleFields()" class="w-full md:w-auto font-bold flex-grow-0 min-w-[130px]">
+                    <option value="買入">買入 (支出)</option>
+                    <option value="賣出">賣出 (收入)</option>
+                    <option value="費用">費用 (支出)</option>
+                    <option value="收入">收入 (股息)</option>
+                </select>
+                
+                <input type="text" id="symbol" placeholder="股票代號" class="w-full md:w-32 uppercase font-bold flex-grow">
+                
+                <div id="tradeFields" class="w-full md:w-auto flex items-center gap-2 flex-grow">
+                    <input type="number" id="price" step="0.001" placeholder="單價 (0.00)" class="w-1/2 md:w-28">
+                    <input type="number" id="quantity" placeholder="數量" class="w-1/2 md:w-24">
                 </div>
-                <div class="md:col-span-1">
-                    <label class="block text-xs font-bold text-slate-500 mb-2">類型</label>
-                    <select id="entryType" onchange="toggleFields()" class="w-full font-bold">
-                        <option value="買入">買入 (支出)</option>
-                        <option value="賣出">賣出 (收入)</option>
-                        <option value="費用">費用 (支出)</option>
-                        <option value="收入">收入 (股息)</option>
-                    </select>
-                </div>
-                <div class="md:col-span-1">
-                    <label class="block text-xs font-bold text-slate-500 mb-2">股票代號</label>
-                    <input type="text" id="symbol" placeholder="如: AAPL" class="w-full uppercase font-bold">
-                </div>
-                <div id="tradeFields" class="md:col-span-2 grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-500 mb-2">單價</label>
-                        <input type="number" id="price" step="0.001" placeholder="0.00" class="w-full">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-500 mb-2">數量</label>
-                        <input type="number" id="quantity" placeholder="0" class="w-full">
-                    </div>
-                </div>
-                <div class="md:col-span-1">
-                    <label class="block text-xs font-bold text-slate-500 mb-2">附加金額</label>
-                    <input type="number" id="feeOrAmount" step="0.01" value="0" class="w-full font-black text-blue-700 bg-blue-50">
-                </div>
-                <div class="md:col-span-1">
-                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-black transition shadow-md">
-                        確認記錄
-                    </button>
-                </div>
-                <div class="lg:col-span-7">
-                    <input type="text" id="note" placeholder="在此輸入備註（例如：複利投資、手續費說明...）" class="w-full text-sm italic">
-                </div>
+                
+                <input type="number" id="feeOrAmount" step="0.01" value="0" placeholder="息費" class="w-full md:w-28 font-black text-blue-700 bg-blue-50">
+                
+                <button type="submit" class="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-black transition text-sm">
+                    記錄
+                </button>
             </form>
+            
+            <div class="mt-3">
+                <input type="text" id="note" placeholder="備註（在此輸入例如：複利投資、手續費說明...）" class="w-full text-sm italic !bg-slate-50 border-none rounded-md p-2">
+            </div>
         </div>
 
         <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
@@ -93,22 +79,23 @@
                 📜 明細清單 <span id="filterLabel" class="hidden bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-mono font-bold"></span>
             </h2>
             <div class="relative w-full md:w-80">
-                <input type="text" id="filterInput" onkeyup="render()" placeholder="🔍 搜尋代號查看統計..." class="w-full !border-2 !border-amber-400 !rounded-2xl shadow-sm font-bold">
+                <input type="text" id="filterInput" onkeyup="render()" placeholder="🔍 輸入代號搜尋（例如：09988）" 
+                       class="w-full !border-2 !border-slate-800 !rounded-2xl shadow-xl font-bold bg-white text-slate-800 focus:ring-4 focus:ring-slate-300 transition-all p-3">
             </div>
         </div>
 
-        <div class="card overflow-hidden border border-slate-200">
+        <div class="card overflow-hidden border border-slate-200 shadow-2xl">
             <div class="overflow-x-auto">
-                <table class="w-full text-sm text-left">
+                <table class="w-full text-sm text-left table-fixed min-w-[800px]">
                     <thead class="table-header">
                         <tr>
-                            <th class="px-6">日期</th>
-                            <th class="px-6">類型</th>
-                            <th class="px-6 text-center">代號</th>
-                            <th class="px-6 text-right">交易詳情</th>
-                            <th class="px-6 text-right">附加金額</th>
-                            <th class="px-6 text-right">現金流</th>
-                            <th class="px-6 text-center">操作</th>
+                            <th class="px-6 w-[160px]">日期</th>
+                            <th class="px-6 w-[100px]">類型</th>
+                            <th class="px-6 w-[120px] text-center">代號</th>
+                            <th class="px-6 w-[200px] text-right">交易詳情</th>
+                            <th class="px-6 w-[120px] text-right">附加金額</th>
+                            <th class="px-6 w-[150px] text-right">現金流</th>
+                            <th class="px-6 w-[80px] text-center">操作</th>
                         </tr>
                     </thead>
                     <tbody id="recordBody" class="divide-y divide-slate-100">
@@ -116,6 +103,8 @@
                 </table>
             </div>
         </div>
+        
+        <div class="h-20"></div>
     </div>
 
     <script>
@@ -164,17 +153,17 @@
                 const isOut = (r.type === '買入' || r.type === '費用');
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 transition-colors ${isOut ? 'border-outflow' : 'border-inflow'}">
-                        <td class="px-6 py-4 font-mono text-slate-500 font-bold">${r.date}</td>
+                        <td class="px-6 py-4 font-mono text-slate-600 font-bold">${r.date}</td>
                         <td class="px-6 py-4 font-black ${isOut ? 'text-red-600' : 'text-green-600'}">${r.type}</td>
                         <td class="px-6 py-4 font-black text-slate-800 text-center">${r.symbol}</td>
-                        <td class="px-6 py-4 text-right font-medium text-slate-600">${r.price ? `${r.price.toLocaleString()} × ${r.quantity.toLocaleString()}` : '--'}</td>
+                        <td class="px-6 py-4 text-right font-medium text-slate-600 truncate">${r.price ? `${r.price.toLocaleString()} × ${r.quantity.toLocaleString()}` : '--'}</td>
                         <td class="px-6 py-4 text-right font-bold ${r.feeOrAmount < 0 ? 'text-red-500' : 'text-green-600'}">${r.feeOrAmount >= 0 ? '+' : ''}${r.feeOrAmount.toLocaleString()}</td>
                         <td class="px-6 py-4 text-right font-black ${rowCash >= 0 ? 'text-green-600' : 'text-red-600'}">${rowCash >= 0 ? '+' : ''}${rowCash.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
                         <td class="px-6 py-4 text-center">
                             <button onclick="deleteRecord(${r.id})" class="text-slate-300 hover:text-red-500 transition-colors text-lg">✕</button>
                         </td>
                     </tr>
-                    ${r.note ? `<tr><td colspan="7" class="px-12 py-2 text-[12px] text-slate-400 italic bg-slate-50/50 border-none font-medium">備註：${r.note}</td></tr>` : ''}
+                    ${r.note ? `<tr><td colspan="7" class="px-12 py-1.5 text-[11px] text-slate-400 italic bg-slate-50/50 border-none font-medium">└ 備註：${r.note}</td></tr>` : ''}
                 `;
             });
 
@@ -235,7 +224,7 @@
         });
 
         function deleteRecord(id) { if(confirm('確定要刪除這筆紀錄嗎？')) { records = records.filter(r => r.id !== id); localStorage.setItem('v3_7_portfolio_data', JSON.stringify(records)); render(); } }
-        function exportCSV() { let csv = "\uFEFF日期,類型,代號,單價,數量,附加金額,備註\n"; records.forEach(r => csv += `${r.date},${r.type},${r.symbol},${r.price},${r.quantity},${r.feeOrAmount},${r.note}\n`); const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' }); const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = `Portfolio_v3.7.6.csv`; link.click(); }
+        function exportCSV() { let csv = "\uFEFF日期,類型,代號,單價,數量,附加金額,備註\n"; records.forEach(r => csv += `${r.date},${r.type},${r.symbol},${r.price},${r.quantity},${r.feeOrAmount},${r.note}\n`); const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' }); const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = `CashFlow_Backup.csv`; link.click(); }
 
         render();
     </script>
