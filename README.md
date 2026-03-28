@@ -3,83 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>資產管理專家 v3.7.4 - 最終強制定製版</title>
+    <title>資產管理專家 v3.7.5</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* 最高等級強制背景與文字顏色 */
-        html, body { background-color: #f8fafc !important; color: #1e293b !important; }
-        .card { background-color: #ffffff !important; color: #1e293b !important; border: 1px solid #e2e8f0; }
-        th { color: #ffffff !important; background-color: #1e293b !important; font-weight: 900 !important; }
-        td { color: #334155 !important; font-weight: 600 !important; }
-        input, select { background-color: #ffffff !important; color: #000000 !important; border: 2px solid #cbd5e1 !important; }
-    </style>
 </head>
-<body class="p-4 md:p-8">
+<body style="background-color: #f8fafc !important; color: #1e293b !important; padding: 20px;">
 
-    <div class="max-w-7xl mx-auto">
-        <header class="mb-8 border-b-2 border-slate-300 pb-4">
-            <h1 class="text-3xl font-black text-slate-900">📊 投資流水管理 v3.7.4</h1>
-            <p class="text-slate-600 font-bold">支出(買入/費用)：紅 | 收入(賣出/股息)：綠</p>
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <header style="border-bottom: 2px solid #cbd5e1; margin-bottom: 30px; padding-bottom: 10px;">
+            <h1 style="font-size: 28px; font-weight: 900; color: #0f172a;">📊 投資流水管理 v3.7.5</h1>
+            <p style="color: #64748b; font-weight: bold;">支出(紅) / 收入(綠)</p>
         </header>
 
-        <div id="statsGrid" class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8"></div>
+        <div id="statsGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px;"></div>
 
-        <div class="card p-6 mb-8 border-t-8 border-slate-900 shadow-xl">
-            <form id="mainForm" class="grid grid-cols-1 md:grid-cols-7 gap-4 items-end">
-                <div class="md:col-span-1">
-                    <label class="block text-xs font-black mb-2">日期</label>
-                    <input type="date" id="entryDate" class="w-full">
-                </div>
-                <div class="md:col-span-1">
-                    <label class="block text-xs font-black mb-2">類型</label>
-                    <select id="entryType" onchange="toggleFields()" class="w-full font-bold">
-                        <option value="買入">買入 (支出)</option>
-                        <option value="賣出">賣出 (收入)</option>
-                        <option value="費用">費用 (支出)</option>
-                        <option value="收入">收入 (股息)</option>
-                    </select>
-                </div>
-                <div class="md:col-span-1">
-                    <label class="block text-xs font-black mb-2">代號</label>
-                    <input type="text" id="symbol" placeholder="AAPL" class="w-full uppercase font-bold">
-                </div>
-                <div id="tradeFields" class="md:col-span-2 grid grid-cols-2 gap-2">
-                    <input type="number" id="price" step="0.001" placeholder="單價" class="w-full">
-                    <input type="number" id="quantity" placeholder="數量" class="w-full">
-                </div>
-                <div class="md:col-span-1">
-                    <label class="block text-xs font-black mb-2">附加金額</label>
-                    <input type="number" id="feeOrAmount" step="0.01" value="0" class="w-full font-black text-blue-800 bg-blue-50">
-                </div>
-                <div class="md:col-span-1">
-                    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded font-black">記錄</button>
-                </div>
-                <div class="md:col-span-7">
-                    <input type="text" id="note" placeholder="備註..." class="w-full text-sm">
-                </div>
+        <div style="background: white; padding: 20px; border-radius: 12px; border-top: 8px solid #0f172a; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); margin-bottom: 30px;">
+            <form id="mainForm" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px;">
+                <input type="date" id="entryDate" style="border: 2px solid #cbd5e1; padding: 8px; border-radius: 6px;">
+                <select id="entryType" style="border: 2px solid #cbd5e1; padding: 8px; border-radius: 6px; font-weight: bold;">
+                    <option value="買入">買入 (支出)</option>
+                    <option value="賣出">賣出 (收入)</option>
+                    <option value="費用">費用 (支出)</option>
+                    <option value="收入">收入 (股息)</option>
+                </select>
+                <input type="text" id="symbol" placeholder="代號" style="border: 2px solid #cbd5e1; padding: 8px; border-radius: 6px; text-transform: uppercase;">
+                <input type="number" id="price" step="0.001" placeholder="單價" style="border: 2px solid #cbd5e1; padding: 8px; border-radius: 6px;">
+                <input type="number" id="quantity" placeholder="數量" style="border: 2px solid #cbd5e1; padding: 8px; border-radius: 6px;">
+                <input type="number" id="feeOrAmount" step="0.01" value="0" style="border: 2px solid #cbd5e1; padding: 8px; border-radius: 6px; background: #eff6ff; font-weight: bold; color: #1d4ed8;">
+                <button type="submit" style="background: #2563eb; color: white; border: none; padding: 10px; border-radius: 6px; font-weight: 900; cursor: pointer;">記錄</button>
+                <input type="text" id="note" placeholder="備註..." style="grid-column: 1 / -1; border: 2px solid #cbd5e1; padding: 8px; border-radius: 6px;">
             </form>
         </div>
 
-        <div class="mb-4">
-            <input type="text" id="filterInput" onkeyup="render()" placeholder="🔍 輸入代號查看統計..." 
-                   style="border: 3px solid #f59e0b !important; background: white !important; color: black !important;"
-                   class="w-full md:w-96 p-3 rounded-xl font-bold">
-        </div>
+        <input type="text" id="filterInput" onkeyup="render()" placeholder="🔍 輸入代號搜尋..." 
+               style="width: 100%; max-width: 400px; padding: 12px; border: 3px solid #fbbf24; border-radius: 10px; margin-bottom: 20px; background: white; color: black; font-weight: bold;">
 
-        <div class="card overflow-x-auto">
-            <table class="min-w-full">
-                <thead style="background-color: #1e293b !important; color: #ffffff !important;">
-                    <tr>
-                        <th style="padding: 15px; text-align: left; color: white !important;">日期</th>
-                        <th style="padding: 15px; text-align: left; color: white !important;">類型</th>
-                        <th style="padding: 15px; text-align: left; color: white !important;">代號</th>
-                        <th style="padding: 15px; text-align: right; color: white !important;">詳情</th>
-                        <th style="padding: 15px; text-align: right; color: white !important;">附加金額</th>
-                        <th style="padding: 15px; text-align: right; color: white !important;">現金流</th>
-                        <th style="padding: 15px; text-align: center; color: white !important;">操作</th>
+        <div style="background: white; border-radius: 12px; overflow-x: auto; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+            <table style="width: 100%; border-collapse: collapse; min-width: 700px;">
+                <thead>
+                    <tr style="background-color: #1e293b !important;">
+                        <th style="padding: 15px; color: white !important; text-align: left; font-weight: 900;">日期</th>
+                        <th style="padding: 15px; color: white !important; text-align: left; font-weight: 900;">類型</th>
+                        <th style="padding: 15px; color: white !important; text-align: left; font-weight: 900;">代號</th>
+                        <th style="padding: 15px; color: white !important; text-align: right; font-weight: 900;">詳情</th>
+                        <th style="padding: 15px; color: white !important; text-align: right; font-weight: 900;">附加金額</th>
+                        <th style="padding: 15px; color: white !important; text-align: right; font-weight: 900;">現金流</th>
+                        <th style="padding: 15px; color: white !important; text-align: center; font-weight: 900;">操作</th>
                     </tr>
                 </thead>
-                <tbody id="recordBody" class="divide-y divide-slate-200"></tbody>
+                <tbody id="recordBody"></tbody>
             </table>
         </div>
     </div>
@@ -89,12 +60,6 @@
         initDate();
         let records = JSON.parse(localStorage.getItem('v3_7_portfolio_data')) || [];
         let editingId = null;
-
-        function toggleFields() {
-            const type = document.getElementById('entryType').value;
-            const isTrade = (type === '買入' || type === '賣出');
-            document.getElementById('tradeFields').style.opacity = isTrade ? "1" : "0.3";
-        }
 
         function render() {
             const filter = document.getElementById('filterInput').value.toUpperCase();
@@ -116,21 +81,19 @@
                 totalCashFlow += rowCash; totalFees += r.feeOrAmount;
 
                 const isOut = (r.type === '買入' || r.type === '費用');
-                const rowHtml = `
-                    <tr style="border-left: 6px solid ${isOut ? '#ef4444' : '#10b981'};">
-                        <td class="px-6 py-4">${r.date}</td>
-                        <td class="px-6 py-4" style="color: ${isOut ? '#dc2626' : '#059669'}; font-weight: 900;">${r.type}</td>
-                        <td class="px-6 py-4 font-bold text-slate-900">${r.symbol}</td>
-                        <td class="px-6 py-4 text-right">${r.price ? `${r.price}×${r.quantity}` : '--'}</td>
-                        <td class="px-6 py-4 text-right" style="color: ${r.feeOrAmount < 0 ? '#dc2626' : '#059669'};">${r.feeOrAmount}</td>
-                        <td class="px-6 py-4 text-right" style="color: ${rowCash >= 0 ? '#059669' : '#dc2626'}; font-weight: 900;">${rowCash.toFixed(2)}</td>
-                        <td class="px-6 py-4 text-center">
-                            <button onclick="startEdit(${r.id})" style="color: #64748b; margin-right: 10px;">✎</button>
-                            <button onclick="deleteRecord(${r.id})" style="color: #cbd5e1;">✕</button>
+                tbody.innerHTML += `
+                    <tr style="border-bottom: 1px solid #e2e8f0; border-left: 6px solid ${isOut ? '#ef4444' : '#10b981'};">
+                        <td style="padding: 15px; font-family: monospace;">${r.date}</td>
+                        <td style="padding: 15px; color: ${isOut ? '#ef4444' : '#10b981'}; font-weight: 900;">${r.type}</td>
+                        <td style="padding: 15px; font-weight: 900;">${r.symbol}</td>
+                        <td style="padding: 15px; text-align: right;">${r.price ? `${r.price}×${r.quantity}` : '--'}</td>
+                        <td style="padding: 15px; text-align: right; color: ${r.feeOrAmount < 0 ? '#ef4444' : '#10b981'};">${r.feeOrAmount}</td>
+                        <td style="padding: 15px; text-align: right; font-weight: 900; color: ${rowCash >= 0 ? '#10b981' : '#ef4444'};">${rowCash.toFixed(2)}</td>
+                        <td style="padding: 15px; text-align: center;">
+                            <button onclick="deleteRecord(${r.id})" style="color: #cbd5e1; cursor: pointer; border: none; background: none; font-size: 18px;">✕</button>
                         </td>
                     </tr>
                 `;
-                tbody.innerHTML += rowHtml;
             });
 
             const currentQty = totalBuyQty - totalSellQty;
@@ -138,19 +101,15 @@
 
             if (filter) {
                 statsGrid.innerHTML = `
-                    <div class="card p-4 border-b-4 border-blue-500"><p class="text-xs font-black text-slate-400">持倉</p><p class="text-xl font-black">${currentQty}</p></div>
-                    <div class="card p-4 border-b-4 border-amber-500"><p class="text-xs font-black text-slate-400">成本</p><p class="text-xl font-black">$${avgCost.toFixed(2)}</p></div>
-                    <div class="card p-4 border-b-4 border-slate-300"><p class="text-xs font-black text-slate-400">息/費</p><p class="text-xl font-black">$${totalFees}</p></div>
-                    <div class="card p-4 bg-slate-900 text-white"><p class="text-xs font-bold text-slate-400">該股票的淨流</p><p class="text-xl font-black">$${totalCashFlow.toFixed(2)}</p></div>
+                    <div style="background: white; padding: 15px; border-radius: 8px; border-bottom: 4px solid #3b82f6;"><p style="font-size: 10px; color: #94a3b8; font-weight: 900;">持倉股數</p><p style="font-size: 20px; font-weight: 900;">${currentQty}</p></div>
+                    <div style="background: white; padding: 15px; border-radius: 8px; border-bottom: 4px solid #f59e0b;"><p style="font-size: 10px; color: #94a3b8; font-weight: 900;">平均成本</p><p style="font-size: 20px; font-weight: 900;">$${avgCost.toFixed(2)}</p></div>
+                    <div style="background: white; padding: 15px; border-radius: 8px; border-bottom: 4px solid #94a3b8;"><p style="font-size: 10px; color: #94a3b8; font-weight: 900;">累計費用</p><p style="font-size: 20px; font-weight: 900;">$${totalFees}</p></div>
+                    <div style="background: #1e293b; color: white; padding: 15px; border-radius: 8px;"><p style="font-size: 10px; color: #94a3b8; font-weight: 900;">該股票的損益</p><p style="font-size: 20px; font-weight: 900; color: ${totalCashFlow >= 0 ? '#4ade80' : '#f87171'};">$${totalCashFlow.toFixed(2)}</p></div>
                 `;
             } else {
-                statsGrid.innerHTML = `<div class="card p-4 border-b-4 border-slate-400 md:col-span-4 font-bold text-center text-slate-600">總帳戶流水淨值: $${totalCashFlow.toFixed(2)}</div>`;
+                statsGrid.innerHTML = `<div style="background: white; padding: 15px; border-radius: 8px; border-bottom: 4px solid #94a3b8; grid-column: 1 / -1; text-align: center; font-weight: 900;">全帳戶流水淨值: $${totalCashFlow.toFixed(2)}</div>`;
             }
         }
-
-        function startEdit(id) { editingId = id; render(); }
-        function deleteRecord(id) { if(confirm('確定刪除？')) { records = records.filter(r => r.id !== id); localStorage.setItem('v3_7_portfolio_data', JSON.stringify(records)); render(); } }
-        function exportCSV() { let csv = "\uFEFF日期,類型,代號,單價,數量,附加金額,備註\n"; records.forEach(r => csv += `${r.date},${r.type},${r.symbol},${r.price},${r.quantity},${r.feeOrAmount},${r.note}\n`); const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' }); const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = `Portfolio.csv`; link.click(); }
 
         document.getElementById('mainForm').addEventListener('submit', (e) => {
             e.preventDefault();
@@ -161,6 +120,10 @@
             document.getElementById('mainForm').reset();
             initDate();
         });
+
+        function deleteRecord(id) { if(confirm('確定刪除？')) { records = records.filter(r => r.id !== id); localStorage.setItem('v3_7_portfolio_data', JSON.stringify(records)); render(); } }
+        function exportCSV() { let csv = "\uFEFF日期,類型,代號,單價,數量,附加金額,備註\n"; records.forEach(r => csv += `${r.date},${r.type},${r.symbol},${r.price},${r.quantity},${r.feeOrAmount},${r.note}\n`); const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' }); const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = `Portfolio.csv`; link.click(); }
+
         render();
     </script>
 </body>
